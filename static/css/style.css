@@ -9,13 +9,12 @@
 /* DROP ZONE */
 #drop-zone {
   position: relative;
-  width: 500px;
-  height: 400px;
+  width: 510px;
+  height: 410px;
   border: 2px dashed #aaa;
   border-radius: 8px;
   overflow: hidden;
   text-align: center;
-  cursor: pointer;
 }
 #drop-zone.dragover {
   border-color: #333;
@@ -40,6 +39,14 @@
 #file-input { display: none; }
 
 /* PALETTE CONTAINER */
+#palette-container {
+  position: relative;
+  width: 510px;
+  height: 410px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
 .color-item {
   display: flex;
   align-items: center;
@@ -62,13 +69,19 @@
 .copy-button {
   padding: 4px 8px;
   font-size: 0.9em;
+  color: var(--text-color) !important;
   cursor: pointer;
+}
+
+.copy-button:hover {
+  background-color: #f0f0f0;
+  border-radius: 4px;
 }
 
 /* DARK MODE */
 :root {
     --bg-color: #ffffff;
-    --text-color: #000000;
+    --text-color: #1c1c1c;
   }
 
   body {

@@ -73,7 +73,8 @@ function showImage(src) {
   img.src = src;
   img.alt = 'Dropped image';
   dropZone.appendChild(img);
-  
+  const container = document.getElementById('palette-container');
+  container.hidden = false;
   fetch(src)
   .then(res => res.blob())
   .then(blob => {
@@ -96,37 +97,56 @@ function showImage(src) {
 }
 
 function renderPalette(palette) {
-  const container = document.getElementById('palette-container');
-  container.innerHTML = ''; // Clear previous content
+  const paletteBox = document.getElementById('palette-box');
+  paletteBox.innerHTML = ''; // Clear previous content
 
   palette.forEach(({ color, percentage }) => {
     const item = document.createElement('div');
-    item.className = 'color-item';
+    item.className = 'color-item row align-items-center mb-3 ms-2';
 
+    const swatchCol = document.createElement('div');
+    swatchCol.className = 'col-3';
     const swatch = document.createElement('div');
     swatch.className = 'color-swatch';
     swatch.style.backgroundColor = color;
+    swatchCol.appendChild(swatch);
 
+    const codeCol = document.createElement('div');
+    codeCol.className = 'col-3';
     const code = document.createElement('span');
     code.className = 'color-code';
     code.textContent = color;
+    codeCol.appendChild(code);
 
-    const copyBtn = document.createElement('button');
-    copyBtn.className = 'copy-button btn btn-sm btn-outline-secondary';
-    copyBtn.textContent = 'Copy';
+    const percentageCol = document.createElement('div');
+    percentageCol.className = 'col-3';
+    const percentageText = document.createElement('span');
+    percentageText.className = 'color-percentage';
+    const formattedPercentage = percentage.toFixed(2).padStart(5, '0');
+    percentageText.textContent = `${formattedPercentage}% `;
+    percentageCol.appendChild(percentageText);
+
+    const copyBtnCol = document.createElement('div');
+    copyBtnCol.className = 'col-3';
+    const copyBtn = document.createElement('a');
+    copyBtn.href = 'javascript:void(0)';
+    copyBtn.className = 'copy-button mx-2';
+    copyBtn.innerHTML = '<i class="bi bi-copy"></i>';
     copyBtn.addEventListener('click', () => {
       navigator.clipboard.writeText(color).then(() => {
-        copyBtn.textContent = 'Copied!';
+        copyBtn.innerHTML = '<i class="bi bi-check2" style="color: #00ca00"></i>';
         setTimeout(() => {
-          copyBtn.textContent = 'Copy';
+          copyBtn.innerHTML = '<i class="bi bi-copy"></i>';
         }, 1500);
       });
     });
+    copyBtnCol.appendChild(copyBtn);
 
-    item.appendChild(swatch);
-    item.appendChild(code);
-    item.appendChild(copyBtn);
-    container.appendChild(item);
+    item.appendChild(swatchCol);
+    item.appendChild(codeCol);
+    item.appendChild(percentageCol);
+    item.appendChild(copyBtnCol);
+    paletteBox.appendChild(item);
   });
 }
 
