@@ -47,6 +47,7 @@ dropZone.addEventListener('drop', e => {
   }
 });
 
+// File handlers
 function isImageUrl(url) {
   return /\.(jpeg|jpg|gif|png|webp|svg)$/i.test(url);
 }
@@ -67,6 +68,7 @@ function handleUrl(url) {
   showImage(url);
 }
 
+// Show the image in the drop zone and send it to the backend for extraction while activating the palette box
 function showImage(src) {
   clearDropZone();
   const img = document.createElement('img');
@@ -75,6 +77,15 @@ function showImage(src) {
   dropZone.appendChild(img);
   const container = document.getElementById('palette-container');
   container.hidden = false;
+  
+
+  // Show loading GIF
+  const loadingGif = document.getElementById('loading-gif');
+  loadingGif.style.display = 'block';
+  const paletteBox = document.getElementById('palette-box');
+  paletteBox.hidden = true;
+
+  // Send image to backend for palette extraction
   fetch(src)
   .then(res => res.blob())
   .then(blob => {
@@ -89,13 +100,17 @@ function showImage(src) {
   .then(response => response.json())
   .then(palette => {
     renderPalette(palette);
+    // Hide loading GIF and show palette
+    loadingGif.style.display = 'none';
+    paletteBox.hidden = false;
   })
   .catch(error => {
     console.error('Error:', error);
   });
-
 }
 
+// Render the palette
+// This function creates the HTML elements for each color in the palette
 function renderPalette(palette) {
   const paletteBox = document.getElementById('palette-box');
   paletteBox.innerHTML = ''; // Clear previous content
@@ -104,6 +119,7 @@ function renderPalette(palette) {
     const item = document.createElement('div');
     item.className = 'color-item row align-items-center mb-3 ms-2';
 
+    // Craete preview of the color
     const swatchCol = document.createElement('div');
     swatchCol.className = 'col-3';
     const swatch = document.createElement('div');
@@ -111,6 +127,7 @@ function renderPalette(palette) {
     swatch.style.backgroundColor = color;
     swatchCol.appendChild(swatch);
 
+    // Create color hex code
     const codeCol = document.createElement('div');
     codeCol.className = 'col-3';
     const code = document.createElement('span');
@@ -118,6 +135,7 @@ function renderPalette(palette) {
     code.textContent = color;
     codeCol.appendChild(code);
 
+    // Create percentage text
     const percentageCol = document.createElement('div');
     percentageCol.className = 'col-3';
     const percentageText = document.createElement('span');
@@ -126,6 +144,7 @@ function renderPalette(palette) {
     percentageText.textContent = `${formattedPercentage}% `;
     percentageCol.appendChild(percentageText);
 
+    // Create copy button
     const copyBtnCol = document.createElement('div');
     copyBtnCol.className = 'col-3';
     const copyBtn = document.createElement('a');
@@ -142,6 +161,7 @@ function renderPalette(palette) {
     });
     copyBtnCol.appendChild(copyBtn);
 
+    // Append all columns to the row item
     item.appendChild(swatchCol);
     item.appendChild(codeCol);
     item.appendChild(percentageCol);
@@ -150,6 +170,7 @@ function renderPalette(palette) {
   });
 }
 
+// ========================= DARK MODE TOGGLE =========================
 // Dark mode toggle
 const toggleButton = document.getElementById('theme-toggle');
 const body = document.body;

@@ -3,9 +3,14 @@
 {% block body %}
   <div class="container">
     <!-- ================== DARK/LIGHT MODE ================== -->
-    <div class="col-md-3-end center-items">
-      <div class="col-md-1 offset-md-11 my-5">
-        <a type="button" id="theme-toggle" style="font-size: 1.5rem;">🌗</a>
+    <div class="row justify-content-center">
+      <div class="col-md-6 offset-md-3">
+        <h1 class="text-center my-5">Palette Hextractor</h1>
+      </div>
+      <div class="col-md-3">
+        <div class="col-md-1 offset-md-11 my-5">
+          <a type="button" id="theme-toggle" style="font-size: 1.5rem;">🌗</a>
+        </div>
       </div>
     </div>
     <div class="row justify-content-end">
@@ -16,8 +21,9 @@
         </div>
         <!-- ================== PALETTE CONTAINER ================== -->
         <div id="palette-container" class="col-md-6 mx-3 my-3" hidden>
-          <div class="d-flex align-items-center">
-            <div id="palette-box" class="col-12 mt-2"></div>
+          <div class="d-flex align-items-center justify-content-center">
+            <div id="loading-gif" class="center-v"><img src="static/img/Dual Ring@1x-1.0s-200px-200px.gif"></div>
+            <div id="palette-box" class="col-12 mt-2" hidden></div>
           </div>
         </div> 
       </div>

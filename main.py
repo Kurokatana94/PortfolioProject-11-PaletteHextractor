@@ -14,6 +14,7 @@ Bootstrap5(app)
 def home():
     return render_template('index.html', year=dt.datetime.now().year)
 
+# Route to handle the image upload and color palette generation
 @app.route('/get-palette', methods=['POST'])
 def get_palette():
     img = request.files.get('image')

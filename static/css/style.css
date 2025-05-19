@@ -6,6 +6,13 @@
     align-items: center;
 }
 
+.center-v {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 /* DROP ZONE */
 #drop-zone {
   position: relative;
